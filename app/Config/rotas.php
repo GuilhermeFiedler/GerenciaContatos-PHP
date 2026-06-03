@@ -2,7 +2,8 @@
 
 declare(strict_types=1);
 
-class Router
+namespace config;
+class  Router
 {
     private array $routes = [];
 

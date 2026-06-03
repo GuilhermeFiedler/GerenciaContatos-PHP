@@ -1,6 +1,9 @@
 <?php
 declare(strict_types=1);
 
+use config\Database;
+use config\Router;
+
 header('Content-Type: application/json; charset=utf-8');
 
 $router = new Router();
