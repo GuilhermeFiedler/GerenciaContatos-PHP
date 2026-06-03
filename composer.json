@@ -1,0 +1,11 @@
+{
+    "name": "gfiedler/gerencia-contatos",
+    "autoload": {
+        "psr-4": {
+            "Gfiedler\\GerenciaContatos\\": "src/"
+        }
+    },
+    "require": {
+        "vlucas/phpdotenv": "^5.6"
+    }
+}
