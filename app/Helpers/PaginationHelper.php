@@ -1,7 +1,9 @@
 <?php
 
-class PaginationHelper {
-    public static function format($data, $page, $limit, $total) {
+class PaginationHelper
+{
+    public static function format($data, $page, $limit, $total)
+    {
         return [
             "data" => $data,
             "pagination" => [
@@ -9,7 +11,7 @@ class PaginationHelper {
 
                 "limit" => $limit,
                 "total" => $total,
-            "pages" => ceil($total / $limit)]
+                "pages" => ceil($total / $limit)]
         ];
     }
 }

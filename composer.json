@@ -2,7 +2,7 @@
     "name": "gfiedler/gerencia-contatos",
     "autoload": {
         "psr-4": {
-            "Gfiedler\\GerenciaContatos\\": "src/"
+            "Gfiedler\\GerenciaContatos\\": "app/"
         }
     },
     "require": {

@@ -34,8 +34,7 @@ $router->get('/api/contatos/{id}', function (array $params) use ($repo): array {
     return ['data' => $contato];
 });
 
-$router->post('/api/contatos', function () use ($repo): array{
-    $input = json_decode(file_get_contents('php://input'), true);
+$router->post('/api/contatos', function () use ($service): array{
 
     //validar com json_validate
     $raw = file_get_contents('php://input');
@@ -44,15 +43,18 @@ $router->post('/api/contatos', function () use ($repo): array{
         return ['erro' => 'JSON inválido'];
     }
 
+    $dados = json_decode($raw, true);
+
+    $contato = $service->criar($dados);
+
     $nome = trim($input['nome'] ?? '');
     if (empty($nome)){
         http_response_code(422);
         return ['erro' => 'Nome é obrigatório'];
     }
 
-    $id = $repo->criarContato();
     http_response_code(201);
-    return ['data' => $repo->buscarPorId($id)];
+    return ['success' => true, 'data' => $contato];
 });
 
 $router->put('/api/contatos/{id}', function(array $params) use($service): array {
@@ -87,3 +89,5 @@ $router->delete('/api/contatos/{id}', function(array $params) use($service): arr
     return ['success' => true,
             'message' => 'Contato removido'];
 });
+
+$router->dispatch();
