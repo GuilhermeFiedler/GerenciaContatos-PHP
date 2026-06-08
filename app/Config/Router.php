@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace config;
+namespace Gfiedler\GerenciaContatos\Config;
 class  Router
 {
     private array $routes = [];

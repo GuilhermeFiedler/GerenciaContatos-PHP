@@ -1,6 +1,12 @@
 <?php
 
 
+namespace Gfiedler\GerenciaContatos\Services;
+
+use Gfiedler\GerenciaContatos\Repositories\ContatoRepository;
+use InvalidArgumentException;
+use Gfiedler\GerenciaContatos\Helpers\PaginationHelper;
+
 class ContatoService
 {
     public function __construct(

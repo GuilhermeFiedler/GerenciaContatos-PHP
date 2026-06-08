@@ -1,5 +1,8 @@
 <?php
 
+namespace Gfiedler\GerenciaContatos\Repositories;
+use PDO;
+
 class ContatoRepository
 {
     public function __construct(

@@ -1,5 +1,6 @@
 <?php
 
+namespace Gfiedler\GerenciaContatos\Helpers;
 class PaginationHelper
 {
     public static function format($data, $page, $limit, $total)

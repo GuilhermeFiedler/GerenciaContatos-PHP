@@ -1,8 +1,10 @@
 <?php
 declare(strict_types=1);
 
-use config\Database;
-use config\Router;
+use Gfiedler\GerenciaContatos\Config\Database;
+use Gfiedler\GerenciaContatos\Config\Router;
+use Gfiedler\GerenciaContatos\Repositories\ContatoRepository;
+use Gfiedler\GerenciaContatos\Services\ContatoService;
 
 header('Content-Type: application/json; charset=utf-8');
 
@@ -47,7 +49,7 @@ $router->post('/api/contatos', function () use ($service): array{
 
     $contato = $service->criar($dados);
 
-    $nome = trim($input['nome'] ?? '');
+    $nome = trim($dados['nome'] ?? '');
     if (empty($nome)){
         http_response_code(422);
         return ['erro' => 'Nome é obrigatório'];
