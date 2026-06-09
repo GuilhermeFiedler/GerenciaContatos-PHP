@@ -2,6 +2,7 @@
 
 namespace Gfiedler\GerenciaContatos\Repositories;
 use PDO;
+use Gfiedler\GerenciaContatos\Models\Contato;
 
 class ContatoRepository
 {
@@ -11,20 +12,30 @@ class ContatoRepository
     {
     }
 
-    public function criarContato(string $nome, string $email, string $telefone): int
+    public function criarContato(Contato $contato): int
     {
         $stmt = $this->pdo->prepare("INSERT INTO contatos (nome, email, telefone) VALUES (:nome, :email, :telefone)");
-        $stmt->execute([':nome' => $nome, ':email' => $email, ':telefone' => $telefone]);
+        $stmt->execute([':nome' => $contato->getNome(), ':email' => $contato->getEmail(), ':telefone' => $contato->getTelefone()]);
         return (int)$this->pdo->lastInsertId();
     }
 
-    public function buscarPorId(int $id): ?array
+    public function buscarPorId(int $id): ?Contato
     {
         $stmt = $this->pdo->prepare('SELECT id, nome, email, telefone FROM contatos WHERE id = :id');
         $stmt->execute([':id' => $id]);
-        return $stmt->fetch() ?: null;
-    }
+        $dados = $stmt->fetch(PDO::FETCH_ASSOC);
 
+        if (!$dados) {
+            return null;
+        }
+
+        return new Contato(
+            nome: $dados['nome'],
+            email: $dados['email'],
+            telefone: $dados['telefone'],
+            id: (int) $dados['id']
+        );
+    }
     public function listar(
         int $page = 1,
         int $limit = 10
@@ -39,7 +50,18 @@ class ContatoRepository
 
         $stmt->execute();
 
-        return $stmt->fetchAll();
+        $contatos = [];
+
+        foreach ($stmt->fetchAll(PDO::FETCH_ASSOC) as $dados) {
+            $contatos[] = new Contato(
+                nome: $dados['nome'],
+                email: $dados['email'],
+                telefone: $dados['telefone'],
+                id: (int) $dados['id']
+            );
+        }
+
+        return $contatos;
     }
 
     public function total(): int
@@ -49,12 +71,12 @@ class ContatoRepository
             ->fetchColumn();
     }
 
-    public function atualizar(int $id, string $nome, string $email, string $telefone): bool
+    public function atualizar(Contato $contato): bool
     {
         $stmt = $this->pdo->prepare(
             'UPDATE contatos  SET nome = :nome, telefone = :telefone, email = :email WHERE id = :id'
         );
-        $stmt->execute([':id' => $id, ':nome' => $nome, ':email' => $email, ':telefone' => $telefone]);
+        $stmt->execute([':id' => $contato->getId(), ':nome' => $contato->getNome(), ':email' => $contato->getEmail(), ':telefone' => $contato->getTelefone()]);
         return $stmt->rowCount() > 0;
     }
 

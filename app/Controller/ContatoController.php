@@ -26,6 +26,7 @@ class ContatoController
             http_response_code(404);
             return ['error' => 'Contato não encontrado'];
         }
+
         return $contato;
     }
 
@@ -38,11 +39,13 @@ class ContatoController
             return ['error' => 'JSON inválido'];
         }
 
-
-        $contato = $this->service->criar($dados);
+    try{$contato = $this->service->criar($dados);
 
         http_response_code(201);
-        return ['success' => true, 'data' => $contato];
+        return ['success' => true, 'data' => $contato];}catch(\InvalidArgumentException $e){http_response_code(400);
+
+        return ['success' => false, 'message' => $e->getMessage()];}
+
     }
 
     public function update(array $params): array {
@@ -51,17 +54,19 @@ class ContatoController
             true
         );
 
-        $ok = $this->service->atualizar((int)$params['id'],
+        try{        $ok = $this->service->atualizar((int)$params['id'],
             $dados);
 
-        if (!$ok) {
-            http_response_code(404);
-            return ['success' => false,
-                'message' => 'Contato não encontrado'];
-        }
+            if (!$ok) {
+                http_response_code(404);
+                return ['success' => false,
+                    'message' => 'Contato não encontrado'];
+            }
 
-        return ['success' => true
-        ];
+            return ['success' => true
+            ];} catch (\InvalidArgumentException $e) {http_response_code(400);
+        return ['success' => false, 'message' => $e->getMessage()];}
+
     }
 
     public function destroy(array $params): array {

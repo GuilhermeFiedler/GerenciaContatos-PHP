@@ -3,6 +3,7 @@
 
 namespace Gfiedler\GerenciaContatos\Services;
 
+use Gfiedler\GerenciaContatos\Models\Contato;
 use Gfiedler\GerenciaContatos\Repositories\ContatoRepository;
 use InvalidArgumentException;
 use Gfiedler\GerenciaContatos\Helpers\PaginationHelper;
@@ -33,13 +34,16 @@ class ContatoService
             throw new InvalidArgumentException('Telefone inválido');
         }
 
-        $id = $this->repository->criarContato(
-            $nome,
-            $email,
-            $telefone
+        $contato = new Contato(
+            nome : $nome,
+            email: $email,
+            telefone: $telefone,
         );
+        $id = $this->repository->criarContato($contato);
 
-        return $this->repository->buscarPorId($id);
+        $contato = $this->repository->buscarPorId($id);
+        
+        return $this->toArray($contato);
     }
 
     public function atualizar(int $id, array $dados): bool
@@ -56,12 +60,14 @@ class ContatoService
             throw new InvalidArgumentException('Telefone inválido');
         }
 
-        return $this->repository->atualizar(
-            $id,
-            $nome,
-            $email,
-            $telefone
+        $contato = new Contato(
+            nome : $nome,
+            email: $email,
+            telefone: $telefone,
+            id: $id
         );
+
+        return $this->repository->atualizar($contato);
     }
 
     public function excluir(int $id): bool
@@ -71,7 +77,12 @@ class ContatoService
 
     public function buscar(int $id): ?array
     {
-        return $this->repository->buscarPorId($id);
+        $contato = $this->repository->buscarPorId($id);
+
+        if (!$contato) {
+            return null;
+        }
+        return $this->toArray($contato);
     }
 
     public function listar(int $page, int $limit): array
@@ -83,6 +94,18 @@ class ContatoService
 
         $total = $this->repository->total();
 
-        return PaginationHelper::format($dados, $page, $limit, $total);
+        $dadosFormatados = array_map(fn (Contato $c) => $this->toArray($c), $dados);
+
+        return PaginationHelper::format($dadosFormatados, $page, $limit, $total);
+    }
+
+    private function toArray(Contato $contato): array
+    {
+        return [
+            'id' => $contato->getId(),
+            'nome' => $contato->getNome(),
+            'email' => $contato->getEmail(),
+            'telefone' => $contato->getTelefone(),
+        ];
     }
 }

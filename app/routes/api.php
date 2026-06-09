@@ -2,11 +2,10 @@
 declare(strict_types=1);
 
 use Gfiedler\GerenciaContatos\Config\Database;
-use Gfiedler\GerenciaContatos\Controller\ContatoController;
 use Gfiedler\GerenciaContatos\Config\Router;
+use Gfiedler\GerenciaContatos\Controller\ContatoController;
 use Gfiedler\GerenciaContatos\Repositories\ContatoRepository;
 use Gfiedler\GerenciaContatos\Services\ContatoService;
-
 
 $router = new Router();
 $pdo = Database::getConnection();
