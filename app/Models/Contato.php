@@ -1,7 +1,7 @@
 <?php
 namespace Gfiedler\GerenciaContatos\Models;
 use JsonSerializable;
-class Contato implements JsonSerializable{
+class Contato {
     public function __construct(
         private string $nome,
         private string $email,
@@ -9,9 +9,6 @@ class Contato implements JsonSerializable{
         private readonly ?int $id = null,
     ) {}
 
-    public function jsonSerialize(): array{
-        return ['id' => $this->id, 'nome' => $this->nome, 'email' => $this->email, 'telefone' => $this->telefone];
-    }
     public function getId(): ?int
     {
         return $this->id;
