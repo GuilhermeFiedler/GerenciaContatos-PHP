@@ -5,7 +5,7 @@ require_once __DIR__ . '/../vendor/autoload.php';
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../');
 $dotenv->load();
 
-require_once __DIR__ . '/../routes/api.php';
+require_once __DIR__ . '/../app/routes/api.php';
 
 
 /*Construa uma API REST completa de gerenciamento de contatos: CRUD com PDO e prepared

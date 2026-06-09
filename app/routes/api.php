@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 use Gfiedler\GerenciaContatos\Config\Database;
 use Gfiedler\GerenciaContatos\Controller\ContatoController;

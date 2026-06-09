@@ -3,7 +3,7 @@
 namespace Gfiedler\GerenciaContatos\Helpers;
 class PaginationHelper
 {
-    public static function format($data, $page, $limit, $total)
+    public static function format(array $data, int $page, int $limit, int $total): array
     {
         return [
             "data" => $data,
@@ -12,7 +12,7 @@ class PaginationHelper
 
                 "limit" => $limit,
                 "total" => $total,
-                "pages" => ceil($total / $limit)]
+                "pages" => (int) ceil($total / $limit)]
         ];
     }
 }

@@ -24,6 +24,6 @@ class ValidatorService
         return preg_match(
             '/^\d{10,11}$/',
             $telefone
-        );
+        ) === 1;
     }
 }

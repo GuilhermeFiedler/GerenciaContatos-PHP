@@ -1,5 +1,5 @@
 <?php
-namespace App\Models;
+namespace Gfiedler\GerenciaContatos\Models;
 
 class Contato{
     public function getId(): ?int

@@ -25,11 +25,11 @@ class ContatoService
             throw new InvalidArgumentException('Nome é obrigatório');
         }
 
-        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        if (!ValidatorService::email($email)) {
             throw new InvalidArgumentException('E-mail inválido');
         }
 
-        if (!preg_match('/^\d{10,11}', $telefone)) {
+        if (!ValidatorService::telefone($telefone)) {
             throw new InvalidArgumentException('Telefone inválido');
         }
 
@@ -48,11 +48,11 @@ class ContatoService
         $email = trim($dados['email'] ?? '');
         $telefone = preg_replace('/\D/', '', $dados['telefone'] ?? '');
 
-        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        if (!ValidatorService::email($email)) {
             throw new InvalidArgumentException('E-mail inválido');
         }
 
-        if (!preg_match('/^\d{10,11}$/', $telefone)) {
+        if (!ValidatorService::telefone($telefone)) {
             throw new InvalidArgumentException('Telefone inválido');
         }
 
