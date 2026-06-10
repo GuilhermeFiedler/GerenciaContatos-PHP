@@ -1,6 +1,5 @@
 <?php
 namespace Gfiedler\GerenciaContatos\Models;
-use JsonSerializable;
 class Contato {
     public function __construct(
         private string $nome,
