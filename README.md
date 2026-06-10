@@ -62,7 +62,7 @@ GerenciaContatos/
 git clone <url-do-repositorio>
 cd GerenciaContatos
 ```
-### 2️⃣ Clonar o repositório
+### 2️⃣ Instalar composer
 ```bash
 composer install
 ```
